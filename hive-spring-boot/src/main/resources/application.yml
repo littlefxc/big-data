@@ -1,0 +1,13 @@
+server:
+  port: 9090
+management:
+  security:
+    enabled: false
+spring:
+  datasource:
+    url: jdbc:hive2://localhost:10000/awifi_capacity
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.apache.hive.jdbc.HiveDriver
+    username: fengxuechao
+    password: fengxuechao
+
