@@ -2,11 +2,11 @@ create table if not exists capacity_stats_live_access
 (
     id          bigint comment '主键',
     device_num  varchar(100) COMMENT '设备号',
-    start_time  date COMMENT '调阅开始时间',
-    finish_time date COMMENT '调阅结束时间',
-    duration    int COMMENT '耗时，单位秒',
+    start_time  timestamp COMMENT '调阅开始时间',
+    finish_time timestamp COMMENT '调阅结束时间',
+    duration    bigint COMMENT '耗时，单位秒',
     response    int COMMENT '调用结果 1.成功 0.失败'
-) COMMENT '直播调阅日志统计';
+) COMMENT '直播调阅日志统计' row format delimited fields terminated by ',';
 
 create table if not exists capacity_stats_live_exception
 (
@@ -19,9 +19,9 @@ create table if not exists capacity_stats_live_exception
     city_name      varchar(50) COMMENT '设备所属市名称',
     county_code    varchar(50) COMMENT '设备所属区编码',
     county_name    varchar(50) COMMENT '设备所属区名称',
-    exception_time date COMMENT '异常时间，yyyy-MM-dd HH:mm:ss格式',
+    exception_time timestamp COMMENT '异常时间，yyyy-MM-dd HH:mm:ss格式',
     exception_date date COMMENT '异常日期，yyyy-MM-dd格式，用于按天统计'
-) COMMENT '直播异常统计';
+) COMMENT '直播异常统计' row format delimited fields terminated by ',';
 
 CREATE TABLE if not exists capacity_stats_resource
 (
@@ -31,9 +31,9 @@ CREATE TABLE if not exists capacity_stats_resource
     total       varchar(255) COMMENT '资源总量',
     used        varchar(255) COMMENT '已使用资源量',
     area_code   varchar(50) COMMENT '地区编码',
-    update_time date COMMENT '更新时间',
+    update_time timestamp COMMENT '更新时间',
     address     varchar(100) COMMENT '地址'
-) COMMENT '资源统计，包括计算、存储、全天、事件的使用情况';
+) COMMENT '资源统计，包括计算、存储、全天、事件的使用情况' row format delimited fields terminated by ',';
 
 CREATE TABLE if not exists capacity_stats_review_bind
 (
@@ -48,9 +48,9 @@ CREATE TABLE if not exists capacity_stats_review_bind
     county_name   varchar(50) COMMENT '设备所属区名称',
     package_type  int COMMENT '套餐类型 1.全天 2.事件',
     bind_status   int COMMENT ' 绑定状态 1.绑定 2.解绑',
-    bind_time     date COMMENT '绑定/解绑时间，yyyy-MM-dd HH:mm:ss格式',
+    bind_time     timestamp COMMENT '绑定/解绑时间，yyyy-MM-dd HH:mm:ss格式',
     bind_date     date COMMENT '绑定/解绑时间，yyyy-MM-dd格式，用于按天统计'
-) COMMENT '云回看激活统计';
+) COMMENT '云回看激活统计' row format delimited fields terminated by ',';
 
 CREATE TABLE capacity_stats_review_exception
 (
@@ -63,6 +63,6 @@ CREATE TABLE capacity_stats_review_exception
     city_name      varchar(50) COMMENT '设备所属市名称',
     county_code    varchar(50) COMMENT '设备所属区编码',
     county_name    varchar(50) COMMENT '设备所属区名称',
-    exception_time date COMMENT '异常时间，yyyy-MM-dd HH:mm:ss格式，用于按天统计',
+    exception_time timestamp COMMENT '异常时间，yyyy-MM-dd HH:mm:ss格式，用于按天统计',
     exception_date date COMMENT '异常日期，yyyy-MM-dd格式，用于按天统计'
-) COMMENT '云回看异常统计';
+) COMMENT '云回看异常统计' row format delimited fields terminated by ',';
