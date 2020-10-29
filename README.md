@@ -23,3 +23,16 @@
 
 - [ ] [Kylin入门](https://littlefxc.gitee.io/blog/passages/Kylin%E5%85%A5%E9%97%A8/)
 
+### 案例
+
+基于Apache Kylin对Airline数据进行航班准点率、平均延误时间、航班数等方面的分析计算。
+
+#### 数据集
+
+下载地址：https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time
+
+数据文件格式: CSV
+
+时间区间: 1987-10-1 — 2020-6-31
+
+python 脚本：
