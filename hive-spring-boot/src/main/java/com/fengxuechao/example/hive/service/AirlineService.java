@@ -35,4 +35,10 @@ public interface AirlineService {
      * @return 实例对象
      */
     Airline insert(Airline airline);
+
+    void insertFromOutTableOn(String year);
+
+    void deleteByFlightNum(Integer flightnum);
+
+    void update(Airline airline);
 }

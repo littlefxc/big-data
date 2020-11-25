@@ -32,4 +32,10 @@ public interface AirlineDao {
     int insert(Airline airline);
 
     List<Airline> queryAllByLimit(@Param("airline") Airline airline, @Param("offset") int offset, @Param("limit") int limit);
+
+    void insertFromOutTableOn(String year);
+
+    void deleteByFlightNum(Integer flightnum);
+
+    void update(Airline airline);
 }

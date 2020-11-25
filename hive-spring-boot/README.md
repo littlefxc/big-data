@@ -2,7 +2,7 @@
 
 # 1. 前言
 
-本文是基于Apache Kylin对Airline数据进行航班准点率、平均延误时间、航班数等方面的分析计算的关于Hive的衍生部分。
+本文主要是查询 hive-jdbc 的操作的Demo。
 
 本案例中的Airline数据集来自美国交通运输部，数据主要包含的是美国本土主流航空公司的飞机起降信息。包括飞行日期信息(FlightDate)，航班信息(UniqueCarrier,AirlineID)，机场信息（DestCityName,OriginCityName），起飞指标（DepTime,DepDelay），降落指标（ArrTime,ArrDelay），飞行信息(Airtime,Distance)等等。
 
@@ -284,8 +284,12 @@ Apache Kylin支持递增式构建Cube，因此如果Hive原始表是分区的，
     Div5LongestGTime int,
     Div5WheelsOff int,
     Div5TailNum int
-    ) partitioned by(FlightDate date);
+    ) partitioned by(FlightDate date)
+    CLUSTERED BY (FlightNum) INTO 25 BUCKETS
+    stored as orc TBLPROPERTIES ('transactional'='true');
     ```
+  
+**注意 : **Hive 默认不支持修改和删除操作，如果需要的话就必须添加形如 `CLUSTERED BY (FlightNum) INTO 25 BUCKETS stored as orc TBLPROPERTIES ('transactional'='true')`
 
 完成以上步骤后，我们可以查看所处数据库中所包含的表的情况，目前表中有两个表：外部表 airline_data 和分区表airline：
 
@@ -305,14 +309,17 @@ Time taken: 0.041 seconds, Fetched: 2 row(s)
 
 我们可以通过手动更改最大分区的默认个数的数值来规避这个问题：
 
-在hive中运行命令：
+在hive中运行命令(或者在 hive-site.xml 中设置)：
 
 ```sql
+# 导入数据量很大
 set hive.exec.dynamic.partition=true;
 set hive.exec.dynamic.partition.mode=nonstrict;
 set hive.exec.max.dynamic.partitions.pernode=20000;
 set hive.exec.max.dynamic.partitions=20000;
 set hive.exec.max.created.files=20000;
+# 某个reduce中的value堆积的对象过多，导致jvm频繁GC
+set mapred.child.java.opts = -Xmx512m
 ```
 
 **注意**：引入插件包去分割符，会将所有字段强行转换为String类型，而后面我们对数据进行分析计算的时候，需要用到的是integer型，因此我们还需要对表中的原数据进行一次数据转换；
@@ -439,8 +446,116 @@ set hive.exec.max.created.files=20000;
 
 ## 8.1. maven 依赖
 
-## 8.2. 配置
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-## 8.3. 主要代码
+    <groupId>org.example</groupId>
+    <artifactId>hive-spring-boot</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.22.RELEASE</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <!-- hive-jdbc -->
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-jdbc</artifactId>
+            <version>2.3.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.aggregate</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 代码自动生成 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- 测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- 在线API -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+## 8.2. application.yml
+
+```yaml
+server:
+  port: 9090
+management:
+  security:
+    enabled: false
+spring:
+  datasource:
+    url: jdbc:hive2://localhost:10000/airline
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    driver-class-name: org.apache.hive.jdbc.HiveDriver
+    username: fengxuechao
+    password: fengxuechao
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.fengxuechao.example.hive.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+```
+
+## 8.3 关键代码
+
+```java
+@SpringBootApplication
+@EnableSwagger2
+// 与 mysql 数据源毫无差别
+@MapperScan("com.fengxuechao.example.hive.dao")
+public class HiveSpringApp {
+    public static void main(String[] args) {
+        SpringApplication.run(HiveSpringApp.class, args);
+    }
+}
+```
+
 
 

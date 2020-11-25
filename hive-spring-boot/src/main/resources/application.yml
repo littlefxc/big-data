@@ -15,3 +15,5 @@ mybatis:
   type-aliases-package: com.fengxuechao.example.hive.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 自定义aop日志
+aop.log.expression: "execution(* com.awifi.capacity.stats.smarthome.review.bind.service..*.*(..))"

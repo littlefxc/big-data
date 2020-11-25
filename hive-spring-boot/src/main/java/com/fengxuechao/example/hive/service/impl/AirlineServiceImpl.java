@@ -56,4 +56,19 @@ public class AirlineServiceImpl implements AirlineService {
         this.airlineDao.insert(airline);
         return airline;
     }
+
+    @Override
+    public void insertFromOutTableOn(String year) {
+        this.airlineDao.insertFromOutTableOn(year);
+    }
+
+    @Override
+    public void deleteByFlightNum(Integer flightnum) {
+        this.airlineDao.deleteByFlightNum(flightnum);
+    }
+
+    @Override
+    public void update(Airline airline) {
+        this.airlineDao.update(airline);
+    }
 }
