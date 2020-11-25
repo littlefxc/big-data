@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengxuechao.example.hive.dao.AirlineDao">
+
+    <resultMap type="com.fengxuechao.example.hive.entity.Airline" id="AirlineMap">
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="quarter" column="quarter" jdbcType="INTEGER"/>
+        <result property="month" column="month" jdbcType="INTEGER"/>
+        <result property="dayofmonth" column="dayofmonth" jdbcType="INTEGER"/>
+        <result property="dayofweek" column="dayofweek" jdbcType="INTEGER"/>
+        <result property="uniquecarrier" column="uniquecarrier" jdbcType="VARCHAR"/>
+        <result property="airlineid" column="airlineid" jdbcType="INTEGER"/>
+        <result property="carrier" column="carrier" jdbcType="VARCHAR"/>
+        <result property="tailnum" column="tailnum" jdbcType="VARCHAR"/>
+        <result property="flightnum" column="flightnum" jdbcType="INTEGER"/>
+        <result property="originairportid" column="originairportid" jdbcType="INTEGER"/>
+        <result property="originairportseqid" column="originairportseqid" jdbcType="INTEGER"/>
+        <result property="origincitymarketid" column="origincitymarketid" jdbcType="INTEGER"/>
+        <result property="origin" column="origin" jdbcType="VARCHAR"/>
+        <result property="origincityname" column="origincityname" jdbcType="VARCHAR"/>
+        <result property="originstate" column="originstate" jdbcType="VARCHAR"/>
+        <result property="originstatefips" column="originstatefips" jdbcType="INTEGER"/>
+        <result property="originstatename" column="originstatename" jdbcType="VARCHAR"/>
+        <result property="originwac" column="originwac" jdbcType="INTEGER"/>
+        <result property="destairportid" column="destairportid" jdbcType="INTEGER"/>
+        <result property="destairportseqid" column="destairportseqid" jdbcType="INTEGER"/>
+        <result property="destcitymarketid" column="destcitymarketid" jdbcType="INTEGER"/>
+        <result property="dest" column="dest" jdbcType="VARCHAR"/>
+        <result property="destcityname" column="destcityname" jdbcType="VARCHAR"/>
+        <result property="deststate" column="deststate" jdbcType="VARCHAR"/>
+        <result property="deststatefips" column="deststatefips" jdbcType="INTEGER"/>
+        <result property="deststatename" column="deststatename" jdbcType="VARCHAR"/>
+        <result property="destwac" column="destwac" jdbcType="INTEGER"/>
+        <result property="crsdeptime" column="crsdeptime" jdbcType="INTEGER"/>
+        <result property="deptime" column="deptime" jdbcType="INTEGER"/>
+        <result property="depdelay" column="depdelay" jdbcType="INTEGER"/>
+        <result property="depdelayminutes" column="depdelayminutes" jdbcType="INTEGER"/>
+        <result property="depdel15" column="depdel15" jdbcType="INTEGER"/>
+        <result property="departuredelaygroups" column="departuredelaygroups" jdbcType="INTEGER"/>
+        <result property="deptimeblk" column="deptimeblk" jdbcType="VARCHAR"/>
+        <result property="taxiout" column="taxiout" jdbcType="INTEGER"/>
+        <result property="wheelsoff" column="wheelsoff" jdbcType="INTEGER"/>
+        <result property="wheelson" column="wheelson" jdbcType="INTEGER"/>
+        <result property="taxiin" column="taxiin" jdbcType="INTEGER"/>
+        <result property="crsarrtime" column="crsarrtime" jdbcType="INTEGER"/>
+        <result property="arrtime" column="arrtime" jdbcType="INTEGER"/>
+        <result property="arrdelay" column="arrdelay" jdbcType="INTEGER"/>
+        <result property="arrdelayminutes" column="arrdelayminutes" jdbcType="INTEGER"/>
+        <result property="arrdel15" column="arrdel15" jdbcType="INTEGER"/>
+        <result property="arrivaldelaygroups" column="arrivaldelaygroups" jdbcType="INTEGER"/>
+        <result property="arrtimeblk" column="arrtimeblk" jdbcType="VARCHAR"/>
+        <result property="cancelled" column="cancelled" jdbcType="INTEGER"/>
+        <result property="cancellationcode" column="cancellationcode" jdbcType="VARCHAR"/>
+        <result property="diverted" column="diverted" jdbcType="INTEGER"/>
+        <result property="crselapsedtime" column="crselapsedtime" jdbcType="INTEGER"/>
+        <result property="actualelapsedtime" column="actualelapsedtime" jdbcType="INTEGER"/>
+        <result property="airtime" column="airtime" jdbcType="INTEGER"/>
+        <result property="flights" column="flights" jdbcType="INTEGER"/>
+        <result property="distance" column="distance" jdbcType="INTEGER"/>
+        <result property="distancegroup" column="distancegroup" jdbcType="INTEGER"/>
+        <result property="carrierdelay" column="carrierdelay" jdbcType="INTEGER"/>
+        <result property="weatherdelay" column="weatherdelay" jdbcType="INTEGER"/>
+        <result property="nasdelay" column="nasdelay" jdbcType="INTEGER"/>
+        <result property="securitydelay" column="securitydelay" jdbcType="INTEGER"/>
+        <result property="lateaircraftdelay" column="lateaircraftdelay" jdbcType="INTEGER"/>
+        <result property="firstdeptime" column="firstdeptime" jdbcType="INTEGER"/>
+        <result property="totaladdgtime" column="totaladdgtime" jdbcType="INTEGER"/>
+        <result property="longestaddgtime" column="longestaddgtime" jdbcType="INTEGER"/>
+        <result property="divairportlandings" column="divairportlandings" jdbcType="INTEGER"/>
+        <result property="divreacheddest" column="divreacheddest" jdbcType="INTEGER"/>
+        <result property="divactualelapsedtime" column="divactualelapsedtime" jdbcType="INTEGER"/>
+        <result property="divarrdelay" column="divarrdelay" jdbcType="INTEGER"/>
+        <result property="divdistance" column="divdistance" jdbcType="INTEGER"/>
+        <result property="div1airport" column="div1airport" jdbcType="INTEGER"/>
+        <result property="div1airportid" column="div1airportid" jdbcType="INTEGER"/>
+        <result property="div1airportseqid" column="div1airportseqid" jdbcType="INTEGER"/>
+        <result property="div1wheelson" column="div1wheelson" jdbcType="INTEGER"/>
+        <result property="div1totalgtime" column="div1totalgtime" jdbcType="INTEGER"/>
+        <result property="div1longestgtime" column="div1longestgtime" jdbcType="INTEGER"/>
+        <result property="div1wheelsoff" column="div1wheelsoff" jdbcType="INTEGER"/>
+        <result property="div1tailnum" column="div1tailnum" jdbcType="INTEGER"/>
+        <result property="div2airport" column="div2airport" jdbcType="INTEGER"/>
+        <result property="div2airportid" column="div2airportid" jdbcType="INTEGER"/>
+        <result property="div2airportseqid" column="div2airportseqid" jdbcType="INTEGER"/>
+        <result property="div2wheelson" column="div2wheelson" jdbcType="INTEGER"/>
+        <result property="div2totalgtime" column="div2totalgtime" jdbcType="INTEGER"/>
+        <result property="div2longestgtime" column="div2longestgtime" jdbcType="INTEGER"/>
+        <result property="div2wheelsoff" column="div2wheelsoff" jdbcType="INTEGER"/>
+        <result property="div2tailnum" column="div2tailnum" jdbcType="INTEGER"/>
+        <result property="div3airport" column="div3airport" jdbcType="INTEGER"/>
+        <result property="div3airportid" column="div3airportid" jdbcType="INTEGER"/>
+        <result property="div3airportseqid" column="div3airportseqid" jdbcType="INTEGER"/>
+        <result property="div3wheelson" column="div3wheelson" jdbcType="INTEGER"/>
+        <result property="div3totalgtime" column="div3totalgtime" jdbcType="INTEGER"/>
+        <result property="div3longestgtime" column="div3longestgtime" jdbcType="INTEGER"/>
+        <result property="div3wheelsoff" column="div3wheelsoff" jdbcType="INTEGER"/>
+        <result property="div3tailnum" column="div3tailnum" jdbcType="INTEGER"/>
+        <result property="div4airport" column="div4airport" jdbcType="INTEGER"/>
+        <result property="div4airportid" column="div4airportid" jdbcType="INTEGER"/>
+        <result property="div4airportseqid" column="div4airportseqid" jdbcType="INTEGER"/>
+        <result property="div4wheelson" column="div4wheelson" jdbcType="INTEGER"/>
+        <result property="div4totalgtime" column="div4totalgtime" jdbcType="INTEGER"/>
+        <result property="div4longestgtime" column="div4longestgtime" jdbcType="INTEGER"/>
+        <result property="div4wheelsoff" column="div4wheelsoff" jdbcType="INTEGER"/>
+        <result property="div4tailnum" column="div4tailnum" jdbcType="INTEGER"/>
+        <result property="div5airport" column="div5airport" jdbcType="INTEGER"/>
+        <result property="div5airportid" column="div5airportid" jdbcType="INTEGER"/>
+        <result property="div5airportseqid" column="div5airportseqid" jdbcType="INTEGER"/>
+        <result property="div5wheelson" column="div5wheelson" jdbcType="INTEGER"/>
+        <result property="div5totalgtime" column="div5totalgtime" jdbcType="INTEGER"/>
+        <result property="div5longestgtime" column="div5longestgtime" jdbcType="INTEGER"/>
+        <result property="div5wheelsoff" column="div5wheelsoff" jdbcType="INTEGER"/>
+        <result property="div5tailnum" column="div5tailnum" jdbcType="INTEGER"/>
+        <result property="flightdate" column="flightdate" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Columns">
+        year,
+        quarter,
+        month,
+        dayofmonth,
+        dayofweek,
+        uniquecarrier,
+        airlineid,
+        carrier,
+        tailnum,
+        flightnum,
+        originairportid,
+        originairportseqid,
+        origincitymarketid,
+        origin,
+        origincityname,
+        originstate,
+        originstatefips,
+        originstatename,
+        originwac,
+        destairportid,
+        destairportseqid,
+        destcitymarketid,
+        dest,
+        destcityname,
+        deststate,
+        deststatefips,
+        deststatename,
+        destwac,
+        crsdeptime,
+        deptime,
+        depdelay,
+        depdelayminutes,
+        depdel15,
+        departuredelaygroups,
+        deptimeblk,
+        taxiout,
+        wheelsoff,
+        wheelson,
+        taxiin,
+        crsarrtime,
+        arrtime,
+        arrdelay,
+        arrdelayminutes,
+        arrdel15,
+        arrivaldelaygroups,
+        arrtimeblk,
+        cancelled,
+        cancellationcode,
+        diverted,
+        crselapsedtime,
+        actualelapsedtime,
+        airtime,
+        flights,
+        distance,
+        distancegroup,
+        carrierdelay,
+        weatherdelay,
+        nasdelay,
+        securitydelay,
+        lateaircraftdelay,
+        firstdeptime,
+        totaladdgtime,
+        longestaddgtime,
+        divairportlandings,
+        divreacheddest,
+        divactualelapsedtime,
+        divarrdelay,
+        divdistance,
+        div1airport,
+        div1airportid,
+        div1airportseqid,
+        div1wheelson,
+        div1totalgtime,
+        div1longestgtime,
+        div1wheelsoff,
+        div1tailnum,
+        div2airport,
+        div2airportid,
+        div2airportseqid,
+        div2wheelson,
+        div2totalgtime,
+        div2longestgtime,
+        div2wheelsoff,
+        div2tailnum,
+        div3airport,
+        div3airportid,
+        div3airportseqid,
+        div3wheelson,
+        div3totalgtime,
+        div3longestgtime,
+        div3wheelsoff,
+        div3tailnum,
+        div4airport,
+        div4airportid,
+        div4airportseqid,
+        div4wheelson,
+        div4totalgtime,
+        div4longestgtime,
+        div4wheelsoff,
+        div4tailnum,
+        div5airport,
+        div5airportid,
+        div5airportseqid,
+        div5wheelson,
+        div5totalgtime,
+        div5longestgtime,
+        div5wheelsoff,
+        div5tailnum,
+        flightdate
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryByAirlineId" resultMap="AirlineMap">
+        select
+        <include refid="Base_Columns"/>
+        from airline.airline
+        where airlineid = #{airlineid}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAllByLimit" resultMap="AirlineMap">
+        select
+        <include refid="Base_Columns"/>
+        from airline.airline
+        <where>
+            <if test="airline.year != null">
+                and year = #{airline.year}
+            </if>
+            <if test="airline.quarter != null">
+                and quarter = #{airline.quarter}
+            </if>
+            <if test="airline.month != null">
+                and month = #{airline.month}
+            </if>
+            <if test="airline.dayofmonth != null">
+                and dayofmonth = #{airline.dayofmonth}
+            </if>
+            <if test="airline.dayofweek != null">
+                and dayofweek = #{airline.dayofweek}
+            </if>
+            <if test="airline.uniquecarrier != null and airline.uniquecarrier != ''">
+                and uniquecarrier = #{airline.uniquecarrier}
+            </if>
+            <if test="airline.airlineid != null">
+                and airlineid = #{airline.airlineid}
+            </if>
+            <if test="airline.carrier != null and airline.carrier != ''">
+                and carrier = #{airline.carrier}
+            </if>
+            <if test="airline.tailnum != null and airline.tailnum != ''">
+                and tailnum = #{airline.tailnum}
+            </if>
+            <if test="airline.flightnum != null">
+                and flightnum = #{airline.flightnum}
+            </if>
+            <if test="airline.originairportid != null">
+                and originairportid = #{airline.originairportid}
+            </if>
+            <if test="airline.originairportseqid != null">
+                and originairportseqid = #{airline.originairportseqid}
+            </if>
+            <if test="airline.origincitymarketid != null">
+                and origincitymarketid = #{airline.origincitymarketid}
+            </if>
+            <if test="airline.origin != null and airline.origin != ''">
+                and origin = #{airline.origin}
+            </if>
+            <if test="airline.origincityname != null and airline.origincityname != ''">
+                and origincityname = #{airline.origincityname}
+            </if>
+            <if test="airline.originstate != null and airline.originstate != ''">
+                and originstate = #{airline.originstate}
+            </if>
+            <if test="airline.originstatefips != null">
+                and originstatefips = #{airline.originstatefips}
+            </if>
+            <if test="airline.originstatename != null and airline.originstatename != ''">
+                and originstatename = #{airline.originstatename}
+            </if>
+            <if test="airline.originwac != null">
+                and originwac = #{airline.originwac}
+            </if>
+            <if test="airline.destairportid != null">
+                and destairportid = #{airline.destairportid}
+            </if>
+            <if test="airline.destairportseqid != null">
+                and destairportseqid = #{airline.destairportseqid}
+            </if>
+            <if test="airline.destcitymarketid != null">
+                and destcitymarketid = #{airline.destcitymarketid}
+            </if>
+            <if test="airline.dest != null and airline.dest != ''">
+                and dest = #{dest}
+            </if>
+            <if test="airline.destcityname != null and airline.destcityname != ''">
+                and destcityname = #{airline.destcityname}
+            </if>
+            <if test="airline.deststate != null and airline.deststate != ''">
+                and deststate = #{airline.deststate}
+            </if>
+            <if test="airline.deststatefips != null">
+                and deststatefips = #{airline.deststatefips}
+            </if>
+            <if test="airline.deststatename != null and airline.deststatename != ''">
+                and deststatename = #{airline.deststatename}
+            </if>
+            <if test="airline.destwac != null">
+                and destwac = #{airline.destwac}
+            </if>
+            <if test="airline.crsdeptime != null">
+                and crsdeptime = #{airline.crsdeptime}
+            </if>
+            <if test="airline.deptime != null">
+                and deptime = #{airline.deptime}
+            </if>
+            <if test="airline.depdelay != null">
+                and depdelay = #{airline.depdelay}
+            </if>
+            <if test="airline.depdelayminutes != null">
+                and depdelayminutes = #{airline.depdelayminutes}
+            </if>
+            <if test="airline.depdel15 != null">
+                and depdel15 = #{airline.depdel15}
+            </if>
+            <if test="airline.departuredelaygroups != null">
+                and departuredelaygroups = #{airline.departuredelaygroups}
+            </if>
+            <if test="airline.deptimeblk != null and airline.deptimeblk != ''">
+                and deptimeblk = #{airline.deptimeblk}
+            </if>
+            <if test="airline.taxiout != null">
+                and taxiout = #{airline.taxiout}
+            </if>
+            <if test="airline.wheelsoff != null">
+                and wheelsoff = #{airline.wheelsoff}
+            </if>
+            <if test="airline.wheelson != null">
+                and wheelson = #{airline.wheelson}
+            </if>
+            <if test="airline.taxiin != null">
+                and taxiin = #{airline.taxiin}
+            </if>
+            <if test="airline.crsarrtime != null">
+                and crsarrtime = #{airline.crsarrtime}
+            </if>
+            <if test="airline.arrtime != null">
+                and arrtime = #{airline.arrtime}
+            </if>
+            <if test="airline.arrdelay != null">
+                and arrdelay = #{airline.arrdelay}
+            </if>
+            <if test="airline.arrdelayminutes != null">
+                and arrdelayminutes = #{airline.arrdelayminutes}
+            </if>
+            <if test="airline.arrdel15 != null">
+                and arrdel15 = #{airline.arrdel15}
+            </if>
+            <if test="airline.arrivaldelaygroups != null">
+                and arrivaldelaygroups = #{airline.arrivaldelaygroups}
+            </if>
+            <if test="airline.arrtimeblk != null and airline.arrtimeblk != ''">
+                and arrtimeblk = #{airline.arrtimeblk}
+            </if>
+            <if test="airline.cancelled != null">
+                and cancelled = #{airline.cancelled}
+            </if>
+            <if test="airline.cancellationcode != null and airline.cancellationcode != ''">
+                and cancellationcode = #{airline.cancellationcode}
+            </if>
+            <if test="airline.diverted != null">
+                and diverted = #{airline.diverted}
+            </if>
+            <if test="airline.crselapsedtime != null">
+                and crselapsedtime = #{airline.crselapsedtime}
+            </if>
+            <if test="airline.actualelapsedtime != null">
+                and actualelapsedtime = #{airline.actualelapsedtime}
+            </if>
+            <if test="airline.airtime != null">
+                and airtime = #{airline.airtime}
+            </if>
+            <if test="airline.flights != null">
+                and flights = #{airline.flights}
+            </if>
+            <if test="airline.distance != null">
+                and distance = #{airline.distance}
+            </if>
+            <if test="airline.distancegroup != null">
+                and distancegroup = #{airline.distancegroup}
+            </if>
+            <if test="airline.carrierdelay != null">
+                and carrierdelay = #{airline.carrierdelay}
+            </if>
+            <if test="airline.weatherdelay != null">
+                and weatherdelay = #{airline.weatherdelay}
+            </if>
+            <if test="airline.nasdelay != null">
+                and nasdelay = #{airline.nasdelay}
+            </if>
+            <if test="airline.securitydelay != null">
+                and securitydelay = #{airline.securitydelay}
+            </if>
+            <if test="airline.lateaircraftdelay != null">
+                and lateaircraftdelay = #{airline.lateaircraftdelay}
+            </if>
+            <if test="airline.firstdeptime != null">
+                and firstdeptime = #{airline.firstdeptime}
+            </if>
+            <if test="airline.totaladdgtime != null">
+                and totaladdgtime = #{airline.totaladdgtime}
+            </if>
+            <if test="airline.longestaddgtime != null">
+                and longestaddgtime = #{airline.longestaddgtime}
+            </if>
+            <if test="airline.divairportlandings != null">
+                and divairportlandings = #{airline.divairportlandings}
+            </if>
+            <if test="airline.divreacheddest != null">
+                and divreacheddest = #{airline.divreacheddest}
+            </if>
+            <if test="airline.divactualelapsedtime != null">
+                and divactualelapsedtime = #{airline.divactualelapsedtime}
+            </if>
+            <if test="airline.divarrdelay != null">
+                and divarrdelay = #{airline.divarrdelay}
+            </if>
+            <if test="airline.divdistance != null">
+                and divdistance = #{airline.divdistance}
+            </if>
+            <if test="airline.div1airport != null">
+                and div1airport = #{airline.div1airport}
+            </if>
+            <if test="airline.div1airportid != null">
+                and div1airportid = #{airline.div1airportid}
+            </if>
+            <if test="airline.div1airportseqid != null">
+                and div1airportseqid = #{airline.div1airportseqid}
+            </if>
+            <if test="airline.div1wheelson != null">
+                and div1wheelson = #{airline.div1wheelson}
+            </if>
+            <if test="airline.div1totalgtime != null">
+                and div1totalgtime = #{airline.div1totalgtime}
+            </if>
+            <if test="airline.div1longestgtime != null">
+                and div1longestgtime = #{airline.div1longestgtime}
+            </if>
+            <if test="airline.div1wheelsoff != null">
+                and div1wheelsoff = #{airline.div1wheelsoff}
+            </if>
+            <if test="airline.div1tailnum != null">
+                and div1tailnum = #{airline.div1tailnum}
+            </if>
+            <if test="airline.div2airport != null">
+                and div2airport = #{airline.div2airport}
+            </if>
+            <if test="airline.div2airportid != null">
+                and div2airportid = #{airline.div2airportid}
+            </if>
+            <if test="airline.div2airportseqid != null">
+                and div2airportseqid = #{airline.div2airportseqid}
+            </if>
+            <if test="airline.div2wheelson != null">
+                and div2wheelson = #{airline.div2wheelson}
+            </if>
+            <if test="airline.div2totalgtime != null">
+                and div2totalgtime = #{airline.div2totalgtime}
+            </if>
+            <if test="airline.div2longestgtime != null">
+                and div2longestgtime = #{airline.div2longestgtime}
+            </if>
+            <if test="airline.div2wheelsoff != null">
+                and div2wheelsoff = #{airline.div2wheelsoff}
+            </if>
+            <if test="airline.div2tailnum != null">
+                and div2tailnum = #{airline.div2tailnum}
+            </if>
+            <if test="airline.div3airport != null">
+                and div3airport = #{airline.div3airport}
+            </if>
+            <if test="airline.div3airportid != null">
+                and div3airportid = #{airline.div3airportid}
+            </if>
+            <if test="airline.div3airportseqid != null">
+                and div3airportseqid = #{airline.div3airportseqid}
+            </if>
+            <if test="airline.div3wheelson != null">
+                and div3wheelson = #{airline.div3wheelson}
+            </if>
+            <if test="airline.div3totalgtime != null">
+                and div3totalgtime = #{airline.div3totalgtime}
+            </if>
+            <if test="airline.div3longestgtime != null">
+                and div3longestgtime = #{airline.div3longestgtime}
+            </if>
+            <if test="airline.div3wheelsoff != null">
+                and div3wheelsoff = #{airline.div3wheelsoff}
+            </if>
+            <if test="airline.div3tailnum != null">
+                and div3tailnum = #{airline.div3tailnum}
+            </if>
+            <if test="airline.div4airport != null">
+                and div4airport = #{airline.div4airport}
+            </if>
+            <if test="airline.div4airportid != null">
+                and div4airportid = #{airline.div4airportid}
+            </if>
+            <if test="airline.div4airportseqid != null">
+                and div4airportseqid = #{airline.div4airportseqid}
+            </if>
+            <if test="airline.div4wheelson != null">
+                and div4wheelson = #{airline.div4wheelson}
+            </if>
+            <if test="airline.div4totalgtime != null">
+                and div4totalgtime = #{airline.div4totalgtime}
+            </if>
+            <if test="airline.div4longestgtime != null">
+                and div4longestgtime = #{airline.div4longestgtime}
+            </if>
+            <if test="airline.div4wheelsoff != null">
+                and div4wheelsoff = #{airline.div4wheelsoff}
+            </if>
+            <if test="airline.div4tailnum != null">
+                and div4tailnum = #{airline.div4tailnum}
+            </if>
+            <if test="airline.div5airport != null">
+                and div5airport = #{airline.div5airport}
+            </if>
+            <if test="airline.div5airportid != null">
+                and div5airportid = #{airline.div5airportid}
+            </if>
+            <if test="airline.div5airportseqid != null">
+                and div5airportseqid = #{airline.div5airportseqid}
+            </if>
+            <if test="airline.div5wheelson != null">
+                and div5wheelson = #{airline.div5wheelson}
+            </if>
+            <if test="airline.div5totalgtime != null">
+                and div5totalgtime = #{airline.div5totalgtime}
+            </if>
+            <if test="airline.div5longestgtime != null">
+                and div5longestgtime = #{airline.div5longestgtime}
+            </if>
+            <if test="airline.div5wheelsoff != null">
+                and div5wheelsoff = #{airline.div5wheelsoff}
+            </if>
+            <if test="airline.div5tailnum != null">
+                and div5tailnum = #{airline.div5tailnum}
+            </if>
+            <if test="airline.flightdate != null">
+                and flightdate = #{airline.flightdate}
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into airline.airline(<include refid="Base_Columns"/>)
+        values (#{year}, #{quarter}, #{month}, #{dayofmonth}, #{dayofweek}, #{uniquecarrier}, #{airlineid}, #{carrier},
+                #{tailnum}, #{flightnum}, #{originairportid}, #{originairportseqid}, #{origincitymarketid}, #{origin},
+                #{origincityname}, #{originstate}, #{originstatefips}, #{originstatename}, #{originwac},
+                #{destairportid}, #{destairportseqid}, #{destcitymarketid}, #{dest}, #{destcityname}, #{deststate},
+                #{deststatefips}, #{deststatename}, #{destwac}, #{crsdeptime}, #{deptime}, #{depdelay},
+                #{depdelayminutes}, #{depdel15}, #{departuredelaygroups}, #{deptimeblk}, #{taxiout}, #{wheelsoff},
+                #{wheelson}, #{taxiin}, #{crsarrtime}, #{arrtime}, #{arrdelay}, #{arrdelayminutes}, #{arrdel15},
+                #{arrivaldelaygroups}, #{arrtimeblk}, #{cancelled}, #{cancellationcode}, #{diverted}, #{crselapsedtime},
+                #{actualelapsedtime}, #{airtime}, #{flights}, #{distance}, #{distancegroup}, #{carrierdelay},
+                #{weatherdelay}, #{nasdelay}, #{securitydelay}, #{lateaircraftdelay}, #{firstdeptime}, #{totaladdgtime},
+                #{longestaddgtime}, #{divairportlandings}, #{divreacheddest}, #{divactualelapsedtime}, #{divarrdelay},
+                #{divdistance}, #{div1airport}, #{div1airportid}, #{div1airportseqid}, #{div1wheelson},
+                #{div1totalgtime}, #{div1longestgtime}, #{div1wheelsoff}, #{div1tailnum}, #{div2airport},
+                #{div2airportid}, #{div2airportseqid}, #{div2wheelson}, #{div2totalgtime}, #{div2longestgtime},
+                #{div2wheelsoff}, #{div2tailnum}, #{div3airport}, #{div3airportid}, #{div3airportseqid},
+                #{div3wheelson}, #{div3totalgtime}, #{div3longestgtime}, #{div3wheelsoff}, #{div3tailnum},
+                #{div4airport}, #{div4airportid}, #{div4airportseqid}, #{div4wheelson}, #{div4totalgtime},
+                #{div4longestgtime}, #{div4wheelsoff}, #{div4tailnum}, #{div5airport}, #{div5airportid},
+                #{div5airportseqid}, #{div5wheelson}, #{div5totalgtime}, #{div5longestgtime}, #{div5wheelsoff},
+                #{div5tailnum}, #{flightdate})
+    </insert>
+
+</mapper>
