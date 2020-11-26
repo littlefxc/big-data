@@ -319,7 +319,7 @@ set hive.exec.max.dynamic.partitions.pernode=20000;
 set hive.exec.max.dynamic.partitions=20000;
 set hive.exec.max.created.files=20000;
 # 某个reduce中的value堆积的对象过多，导致jvm频繁GC
-set mapred.child.java.opts = -Xmx512m
+set mapred.child.java.opts=-Xmx512m
 ```
 
 **注意**：引入插件包去分割符，会将所有字段强行转换为String类型，而后面我们对数据进行分析计算的时候，需要用到的是integer型，因此我们还需要对表中的原数据进行一次数据转换；
@@ -545,6 +545,8 @@ mybatis:
 
 ## 8.3 关键代码
 
+### 8.3.1 程序入口
+
 ```java
 @SpringBootApplication
 @EnableSwagger2
@@ -557,5 +559,196 @@ public class HiveSpringApp {
 }
 ```
 
+### 8.3.2 controller
 
+```java
+/**
+ * (Airline)表控制层，关于 hive-jdbc 的 CRUD.
+ *
+ * @author makejava
+ * @since 2020-11-25 15:46:23
+ */
+@Api
+@RestController
+public class AirlineController {
+    /**
+     * 服务对象
+     */
+    @Autowired
+    private AirlineService airlineService;
 
+    /**
+     * 根据条件查询航班信息
+     *
+     * @param airline
+     * @return 实例对象
+     */
+    @ApiOperation(value = "根据条件查询航班信息")
+    @GetMapping("/airline")
+    public List<Airline> queryAll(Airline airline,
+                                  @RequestParam(defaultValue = "1") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
+        return this.airlineService.queryAll(airline, page, size);
+    }
+
+    /**
+     * 导入外部表数据
+     *
+     * @param year
+     * @return 实例对象
+     */
+    @ApiOperation(value = "导入外部表数据")
+    @GetMapping("/airline/load")
+    public void load(String year) {
+        this.airlineService.insertFromOutTableOn(year);
+    }
+
+    /**
+     * 根据航班号删除数据
+     *
+     * @param flightnum
+     */
+    @ApiOperation(value = "根据航班号删除数据")
+    @DeleteMapping("/airline")
+    public void deleteByFlightNum(Integer flightnum) {
+        this.airlineService.deleteByFlightNum(flightnum);
+    }
+
+    /**
+     * 根据航班号修改数据
+     * 修改时，不能修改分区字段，否则会报以下错误：
+     * FAILED: SemanticException [Error 10292]: Updating values of partition columns is not supported
+     *
+     * @param airline
+     */
+    @ApiOperation(value = "根据航班号修改数据", notes = "flightdate 是分区字段，无法修改")
+    @PutMapping("/airline")
+    public void updateByFlightNum(@RequestParam Integer flightnum, Airline airline) {
+        airline.setFlightnum(flightnum);
+        this.airlineService.update(airline);
+    }
+
+    /**
+     * 新增数据
+     *
+     * @param airline
+     */
+    @ApiOperation(value = "新增数据")
+    @PostMapping("/airline")
+    public void insert(Airline airline) {
+        this.airlineService.insert(airline);
+    }
+
+}
+```
+
+### 8.3.3 service
+
+```java
+/**
+ * (Airline)表服务实现类
+ *
+ * @author makejava
+ * @since 2020-11-25 15:45:00
+ */
+@Service("airlineService")
+public class AirlineServiceImpl implements AirlineService {
+
+    @Autowired
+    private AirlineDao airlineDao;
+
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param airlineId 主键
+     * @return 实例对象
+     */
+    @Override
+    public Airline queryByAirlineId(Long airlineId) {
+        return this.airlineDao.queryByAirlineId(airlineId);
+    }
+
+    /**
+     * 通过实体作为筛选条件查询
+     *
+     * @param airline 实例对象
+     * @param page
+     * @param size
+     * @return 对象列表
+     */
+    @Override
+    public List<Airline> queryAll(Airline airline, int page, int size) {
+        int offset = Math.max((page - 1) * size, 0);
+        return this.airlineDao.queryAllByLimit(airline, offset, size);
+    }
+
+    /**
+     * 新增数据
+     *
+     * @param airline 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public Airline insert(Airline airline) {
+        this.airlineDao.insert(airline);
+        return airline;
+    }
+
+    @Override
+    public void insertFromOutTableOn(String year) {
+        this.airlineDao.insertFromOutTableOn(year);
+    }
+
+    @Override
+    public void deleteByFlightNum(Integer flightnum) {
+        this.airlineDao.deleteByFlightNum(flightnum);
+    }
+
+    @Override
+    public void update(Airline airline) {
+        this.airlineDao.update(airline);
+    }
+}
+```
+
+### 8.3.4 dao
+
+```java
+/**
+ * (Airline)表数据库访问层
+ *
+ * @author makejava
+ * @since 2020-11-25 15:44:57
+ */
+@Repository
+public interface AirlineDao {
+
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param airlineId 主键
+     * @return 实例对象
+     */
+    Airline queryByAirlineId(Long airlineId);
+
+    /**
+     * 新增数据
+     *
+     * @param airline 实例对象
+     * @return 影响行数
+     */
+    int insert(Airline airline);
+
+    List<Airline> queryAllByLimit(@Param("airline") Airline airline, @Param("offset") int offset, @Param("limit") int limit);
+
+    void insertFromOutTableOn(String year);
+
+    void deleteByFlightNum(Integer flightnum);
+
+    void update(Airline airline);
+}
+```
+
+### 8.3.5 mapper.xml
+
+详见源码
