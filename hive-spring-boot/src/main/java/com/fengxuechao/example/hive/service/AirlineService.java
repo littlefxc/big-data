@@ -28,13 +28,6 @@ public interface AirlineService {
      */
     List<Airline> queryAll(Airline airline, int page, int size);
 
-    /**
-     * 新增数据
-     *
-     * @param airline 实例对象
-     * @return 实例对象
-     */
-    Airline insert(Airline airline);
 
     void insertFromOutTableOn(String year);
 

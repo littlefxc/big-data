@@ -45,18 +45,6 @@ public class AirlineServiceImpl implements AirlineService {
         return this.airlineDao.queryAllByLimit(airline, offset, size);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param airline 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Airline insert(Airline airline) {
-        this.airlineDao.insert(airline);
-        return airline;
-    }
-
     @Override
     public void insertFromOutTableOn(String year) {
         this.airlineDao.insertFromOutTableOn(year);

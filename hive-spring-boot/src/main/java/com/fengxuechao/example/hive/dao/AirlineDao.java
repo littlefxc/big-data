@@ -16,26 +16,18 @@ import java.util.List;
 public interface AirlineDao {
 
     /**
-     * 通过ID查询单条数据
+     * 通过airlineid查询单条数据
      *
-     * @param airlineId 主键
+     * @param airlineid
      * @return 实例对象
      */
-    Airline queryByAirlineId(Long airlineId);
-
-    /**
-     * 新增数据
-     *
-     * @param airline 实例对象
-     * @return 影响行数
-     */
-    int insert(Airline airline);
+    Airline queryByAirlineId(@Param("airlineid") Long airlineid);
 
     List<Airline> queryAllByLimit(@Param("airline") Airline airline, @Param("offset") int offset, @Param("limit") int limit);
 
-    void insertFromOutTableOn(String year);
+    void insertFromOutTableOn(@Param("year") String year);
 
-    void deleteByFlightNum(Integer flightnum);
+    void deleteByFlightNum(@Param("flightnum") Integer flightnum);
 
-    void update(Airline airline);
+    void update(@Param("airline") Airline airline);
 }

@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.POST;
 import java.util.List;
 
 /**
@@ -45,13 +46,13 @@ public class AirlineController {
      * @return 实例对象
      */
     @ApiOperation(value = "导入外部表数据")
-    @GetMapping("/airline/load")
+    @PostMapping("/airline/load")
     public void load(String year) {
         this.airlineService.insertFromOutTableOn(year);
     }
 
     /**
-     * 根据航班号删除数据
+     * 根据航班号删除数据：性能是在是太慢了，不推荐
      *
      * @param flightnum
      */
@@ -62,7 +63,7 @@ public class AirlineController {
     }
 
     /**
-     * 根据航班号修改数据
+     * 根据航班号修改数据：性能是在是太慢了，不推荐
      * 修改时，不能修改分区字段，否则会报以下错误：
      * FAILED: SemanticException [Error 10292]: Updating values of partition columns is not supported
      *
@@ -70,20 +71,9 @@ public class AirlineController {
      */
     @ApiOperation(value = "根据航班号修改数据", notes = "flightdate 是分区字段，无法修改")
     @PutMapping("/airline")
-    public void updateByFlightNum(@RequestParam Integer flightnum, Airline airline) {
+    public void updateByFlightNum(@RequestParam Integer flightnum, @RequestParam("tailnum") String tailnum, Airline airline) {
         airline.setFlightnum(flightnum);
+        airline.setTailnum(tailnum);
         this.airlineService.update(airline);
     }
-
-    /**
-     * 新增数据
-     *
-     * @param airline
-     */
-    @ApiOperation(value = "新增数据")
-    @PostMapping("/airline")
-    public void insert(Airline airline) {
-        this.airlineService.insert(airline);
-    }
-
 }

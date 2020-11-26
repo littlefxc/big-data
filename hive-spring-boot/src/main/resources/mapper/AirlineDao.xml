@@ -576,475 +576,444 @@
         limit #{offset}, #{limit}
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="" useGeneratedKeys="true">
-        insert into airline.airline(<include refid="Base_Columns"/>)
-        values (#{year}, #{quarter}, #{month}, #{dayofmonth}, #{dayofweek}, #{uniquecarrier}, #{airlineid}, #{carrier},
-                #{tailnum}, #{flightnum}, #{originairportid}, #{originairportseqid}, #{origincitymarketid}, #{origin},
-                #{origincityname}, #{originstate}, #{originstatefips}, #{originstatename}, #{originwac},
-                #{destairportid}, #{destairportseqid}, #{destcitymarketid}, #{dest}, #{destcityname}, #{deststate},
-                #{deststatefips}, #{deststatename}, #{destwac}, #{crsdeptime}, #{deptime}, #{depdelay},
-                #{depdelayminutes}, #{depdel15}, #{departuredelaygroups}, #{deptimeblk}, #{taxiout}, #{wheelsoff},
-                #{wheelson}, #{taxiin}, #{crsarrtime}, #{arrtime}, #{arrdelay}, #{arrdelayminutes}, #{arrdel15},
-                #{arrivaldelaygroups}, #{arrtimeblk}, #{cancelled}, #{cancellationcode}, #{diverted}, #{crselapsedtime},
-                #{actualelapsedtime}, #{airtime}, #{flights}, #{distance}, #{distancegroup}, #{carrierdelay},
-                #{weatherdelay}, #{nasdelay}, #{securitydelay}, #{lateaircraftdelay}, #{firstdeptime}, #{totaladdgtime},
-                #{longestaddgtime}, #{divairportlandings}, #{divreacheddest}, #{divactualelapsedtime}, #{divarrdelay},
-                #{divdistance}, #{div1airport}, #{div1airportid}, #{div1airportseqid}, #{div1wheelson},
-                #{div1totalgtime}, #{div1longestgtime}, #{div1wheelsoff}, #{div1tailnum}, #{div2airport},
-                #{div2airportid}, #{div2airportseqid}, #{div2wheelson}, #{div2totalgtime}, #{div2longestgtime},
-                #{div2wheelsoff}, #{div2tailnum}, #{div3airport}, #{div3airportid}, #{div3airportseqid},
-                #{div3wheelson}, #{div3totalgtime}, #{div3longestgtime}, #{div3wheelsoff}, #{div3tailnum},
-                #{div4airport}, #{div4airportid}, #{div4airportseqid}, #{div4wheelson}, #{div4totalgtime},
-                #{div4longestgtime}, #{div4wheelsoff}, #{div4tailnum}, #{div5airport}, #{div5airportid},
-                #{div5airportseqid}, #{div5wheelson}, #{div5totalgtime}, #{div5longestgtime}, #{div5wheelsoff},
-                #{div5tailnum}, #{flightdate})
-    </insert>
-
     <!-- 导入外部表数据 -->
     <insert id="insertFromOutTableOn">
         INSERT INTO TABLE airline partition(FlightDate)
-        SELECT cast(YEAR AS int) AS YEAR,
-               cast(Quarter AS int) AS Quarter,
-               cast(MONTH AS int) AS MONTH,
-               cast(DayofMonth AS int) AS DayofMonth,
-               cast(DayOfWeek AS int) AS DayOfWeek,
-               cast(UniqueCarrier AS string) AS UniqueCarrier,
-               cast(AirlineID AS bigint) AS AirlineID,
-               cast(Carrier AS string) AS Carrier,
-               cast(TailNum AS string) AS TailNum,
-               cast(FlightNum AS int) AS FlightNum,
-               cast(OriginAirportID AS bigint) AS OriginAirportID,
-               cast(OriginAirportSeqID AS bigint) AS OriginAirportSeqID,
-               cast(OriginCityMarketID AS bigint) AS OriginCityMarketID,
-               cast(Origin AS string) AS Origin,
-               cast(OriginCityName AS string) AS OriginCityName,
-               cast(OriginState AS string) AS OriginState,
-               cast(OriginStateFips AS int) AS OriginStateFips,
-               cast(OriginStateName AS string) AS OriginStateName,
-               cast(OriginWac AS int) AS OriginWac,
-               cast(DestAirportID AS int) AS DestAirportID,
-               cast(DestAirportSeqID AS bigint) AS DestAirportSeqID,
-               cast(DestCityMarketID AS bigint) AS DestCityMarketID,
-               cast(Dest AS string) AS Dest,
-               cast(DestCityName AS string) AS DestCityName,
-               cast(DestState AS string) AS DestState,
-               cast(DestStateFips AS int) AS DestStateFips,
-               cast(DestStateName AS string) AS DestStateName,
-               cast(DestWac AS int) AS DestWac,
-               cast(CRSDepTime AS int) AS CRSDepTime,
-               cast(DepTime AS int) AS DepTime,
-               cast(DepDelay AS int) AS DepDelay,
-               cast(DepDelayMinutes AS int) AS DepDelayMinutes,
-               cast(DepDel15 AS int) AS DepDel15,
-               cast(DepartureDelayGroups AS int) AS DepartureDelayGroups,
-               cast(DepTimeBlk AS string) AS DepTimeBlk,
-               cast(TaxiOut AS int) AS TaxiOut,
-               cast(WheelsOff AS int) AS WheelsOff,
-               cast(WheelsOn AS int) AS WheelsOn,
-               cast(TaxiIn AS int) AS TaxiIn,
-               cast(CRSArrTime AS int) AS CRSArrTime,
-               cast(ArrTime AS int) AS ArrTime,
-               cast(ArrDelay AS int) AS ArrDelay,
-               cast(ArrDelayMinutes AS int) AS ArrDelayMinutes,
-               cast(ArrDel15 AS int) AS ArrDel15,
-               cast(ArrivalDelayGroups AS int) AS ArrivalDelayGroups,
-               cast(ArrTimeBlk AS string) AS ArrTimeBlk,
-               cast(Cancelled AS int) AS Cancelled,
-               cast(CancellationCode AS string) AS CancellationCode,
-               cast(Diverted AS int) AS Diverted,
-               cast(CRSElapsedTime AS int) AS CRSElapsedTime,
-               cast(ActualElapsedTime AS int) AS ActualElapsedTime,
-               cast(AirTime AS int) AS AirTime,
-               cast(Flights AS int) AS Flights,
-               cast(Distance AS bigint) AS Distance,
-               cast(DistanceGroup AS int) AS DistanceGroup,
-               cast(CarrierDelay AS int) AS CarrierDelay,
-               cast(WeatherDelay AS int) AS WeatherDelay,
-               cast(NASDelay AS int) AS NASDelay,
-               cast(SecurityDelay AS int) AS SecurityDelay,
-               cast(LateAircraftDelay AS int) AS LateAircraftDelay,
-               cast(FirstDepTime AS int) AS FirstDepTime,
-               cast(TotalAddGTime AS int) AS TotalAddGTime,
-               cast(LongestAddGTime AS int) AS LongestAddGTime,
-               cast(DivAirportLandings AS int) AS DivAirportLandings,
-               cast(DivReachedDest AS int) AS DivReachedDest,
-               cast(DivActualElapsedTime AS int) AS DivActualElapsedTime,
-               cast(DivArrDelay AS int) AS DivArrDelay,
-               cast(DivDistance AS int) AS DivDistance,
-               cast(Div1Airport AS int) AS Div1Airport,
-               cast(Div1AirportID AS int) AS Div1AirportID,
-               cast(Div1AirportSeqID AS int) AS Div1AirportSeqID,
-               cast(Div1WheelsOn AS int) AS Div1WheelsOn,
-               cast(Div1TotalGTime AS int) AS Div1TotalGTime,
-               cast(Div1LongestGTime AS int) AS Div1LongestGTime,
-               cast(Div1WheelsOff AS int) AS Div1WheelsOff,
-               cast(Div1TailNum AS int) AS Div1TailNum,
-               cast(Div2Airport AS int) AS Div2Airport,
-               cast(Div2AirportID AS int) AS Div2AirportID,
-               cast(Div2AirportSeqID AS int) AS Div2AirportSeqID,
-               cast(Div2WheelsOn AS int) AS Div2WheelsOn,
-               cast(Div2TotalGTime AS int) AS Div2TotalGTime,
-               cast(Div2LongestGTime AS int) AS Div2LongestGTime,
-               cast(Div2WheelsOff AS int) AS Div2WheelsOff,
-               cast(Div2TailNum AS int) AS Div2TailNum,
-               cast(Div3Airport AS int) AS Div3Airport,
-               cast(Div3AirportID AS int) AS Div3AirportID,
-               cast(Div3AirportSeqID AS int) AS Div3AirportSeqID,
-               cast(Div3WheelsOn AS int) AS Div3WheelsOn,
-               cast(Div3TotalGTime AS int) AS Div3TotalGTime,
-               cast(Div3LongestGTime AS int) AS Div3LongestGTime,
-               cast(Div3WheelsOff AS int) AS Div3WheelsOff,
-               cast(Div3TailNum AS int) AS Div3TailNum,
-               cast(Div4Airport AS int) AS Div4Airport,
-               cast(Div4AirportID AS int) AS Div4AirportID,
-               cast(Div4AirportSeqID AS int) AS Div4AirportSeqID,
-               cast(Div4WheelsOn AS int) AS Div4WheelsOn,
-               cast(Div4TotalGTime AS int) AS Div4TotalGTime,
-               cast(Div4LongestGTime AS int) AS Div4LongestGTime,
-               cast(Div4WheelsOff AS int) AS Div4WheelsOff,
-               cast(Div4TailNum AS int) AS Div4TailNum,
-               cast(Div5Airport AS int) AS Div5Airport,
-               cast(Div5AirportID AS int) AS Div5AirportID,
-               cast(Div5AirportSeqID AS int) AS Div5AirportSeqID,
-               cast(Div5WheelsOn AS int) AS Div5WheelsOn,
-               cast(Div5TotalGTime AS int) AS Div5TotalGTime,
-               cast(Div5LongestGTime AS int) AS Div5LongestGTime,
-               cast(Div5WheelsOff AS int) AS Div5WheelsOff,
-               cast(Div5TailNum AS int) AS Div5TailNum,
-               cast(FlightDate AS date) AS FlightDate
-        FROM airline_data;
+        SELECT cast(ad.YEAR AS int) AS YEAR,
+        cast(ad.Quarter AS int) AS Quarter,
+        cast(ad.MONTH AS int) AS MONTH,
+        cast(ad.DayofMonth AS int) AS DayofMonth,
+        cast(ad.DayOfWeek AS int) AS DayOfWeek,
+        cast(ad.UniqueCarrier AS string) AS UniqueCarrier,
+        cast(ad.AirlineID AS bigint) AS AirlineID,
+        cast(ad.Carrier AS string) AS Carrier,
+        cast(ad.TailNum AS string) AS TailNum,
+        cast(ad.FlightNum AS int) AS FlightNum,
+        cast(ad.OriginAirportID AS bigint) AS OriginAirportID,
+        cast(ad.OriginAirportSeqID AS bigint) AS OriginAirportSeqID,
+        cast(ad.OriginCityMarketID AS bigint) AS OriginCityMarketID,
+        cast(ad.Origin AS string) AS Origin,
+        cast(ad.OriginCityName AS string) AS OriginCityName,
+        cast(ad.OriginState AS string) AS OriginState,
+        cast(ad.OriginStateFips AS int) AS OriginStateFips,
+        cast(ad.OriginStateName AS string) AS OriginStateName,
+        cast(ad.OriginWac AS int) AS OriginWac,
+        cast(ad.DestAirportID AS int) AS DestAirportID,
+        cast(ad.DestAirportSeqID AS bigint) AS DestAirportSeqID,
+        cast(ad.DestCityMarketID AS bigint) AS DestCityMarketID,
+        cast(ad.Dest AS string) AS Dest,
+        cast(ad.DestCityName AS string) AS DestCityName,
+        cast(ad.DestState AS string) AS DestState,
+        cast(ad.DestStateFips AS int) AS DestStateFips,
+        cast(ad.DestStateName AS string) AS DestStateName,
+        cast(ad.DestWac AS int) AS DestWac,
+        cast(ad.CRSDepTime AS int) AS CRSDepTime,
+        cast(ad.DepTime AS int) AS DepTime,
+        cast(ad.DepDelay AS int) AS DepDelay,
+        cast(ad.DepDelayMinutes AS int) AS DepDelayMinutes,
+        cast(ad.DepDel15 AS int) AS DepDel15,
+        cast(ad.DepartureDelayGroups AS int) AS DepartureDelayGroups,
+        cast(ad.DepTimeBlk AS string) AS DepTimeBlk,
+        cast(ad.TaxiOut AS int) AS TaxiOut,
+        cast(ad.WheelsOff AS int) AS WheelsOff,
+        cast(ad.WheelsOn AS int) AS WheelsOn,
+        cast(ad.TaxiIn AS int) AS TaxiIn,
+        cast(ad.CRSArrTime AS int) AS CRSArrTime,
+        cast(ad.ArrTime AS int) AS ArrTime,
+        cast(ad.ArrDelay AS int) AS ArrDelay,
+        cast(ad.ArrDelayMinutes AS int) AS ArrDelayMinutes,
+        cast(ad.ArrDel15 AS int) AS ArrDel15,
+        cast(ad.ArrivalDelayGroups AS int) AS ArrivalDelayGroups,
+        cast(ad.ArrTimeBlk AS string) AS ArrTimeBlk,
+        cast(ad.Cancelled AS int) AS Cancelled,
+        cast(ad.CancellationCode AS string) AS CancellationCode,
+        cast(ad.Diverted AS int) AS Diverted,
+        cast(ad.CRSElapsedTime AS int) AS CRSElapsedTime,
+        cast(ad.ActualElapsedTime AS int) AS ActualElapsedTime,
+        cast(ad.AirTime AS int) AS AirTime,
+        cast(ad.Flights AS int) AS Flights,
+        cast(ad.Distance AS bigint) AS Distance,
+        cast(ad.DistanceGroup AS int) AS DistanceGroup,
+        cast(ad.CarrierDelay AS int) AS CarrierDelay,
+        cast(ad.WeatherDelay AS int) AS WeatherDelay,
+        cast(ad.NASDelay AS int) AS NASDelay,
+        cast(ad.SecurityDelay AS int) AS SecurityDelay,
+        cast(ad.LateAircraftDelay AS int) AS LateAircraftDelay,
+        cast(ad.FirstDepTime AS int) AS FirstDepTime,
+        cast(ad.TotalAddGTime AS int) AS TotalAddGTime,
+        cast(ad.LongestAddGTime AS int) AS LongestAddGTime,
+        cast(ad.DivAirportLandings AS int) AS DivAirportLandings,
+        cast(ad.DivReachedDest AS int) AS DivReachedDest,
+        cast(ad.DivActualElapsedTime AS int) AS DivActualElapsedTime,
+        cast(ad.DivArrDelay AS int) AS DivArrDelay,
+        cast(ad.DivDistance AS int) AS DivDistance,
+        cast(ad.Div1Airport AS int) AS Div1Airport,
+        cast(ad.Div1AirportID AS int) AS Div1AirportID,
+        cast(ad.Div1AirportSeqID AS int) AS Div1AirportSeqID,
+        cast(ad.Div1WheelsOn AS int) AS Div1WheelsOn,
+        cast(ad.Div1TotalGTime AS int) AS Div1TotalGTime,
+        cast(ad.Div1LongestGTime AS int) AS Div1LongestGTime,
+        cast(ad.Div1WheelsOff AS int) AS Div1WheelsOff,
+        cast(ad.Div1TailNum AS int) AS Div1TailNum,
+        cast(ad.Div2Airport AS int) AS Div2Airport,
+        cast(ad.Div2AirportID AS int) AS Div2AirportID,
+        cast(ad.Div2AirportSeqID AS int) AS Div2AirportSeqID,
+        cast(ad.Div2WheelsOn AS int) AS Div2WheelsOn,
+        cast(ad.Div2TotalGTime AS int) AS Div2TotalGTime,
+        cast(ad.Div2LongestGTime AS int) AS Div2LongestGTime,
+        cast(ad.Div2WheelsOff AS int) AS Div2WheelsOff,
+        cast(ad.Div2TailNum AS int) AS Div2TailNum,
+        cast(ad.Div3Airport AS int) AS Div3Airport,
+        cast(ad.Div3AirportID AS int) AS Div3AirportID,
+        cast(ad.Div3AirportSeqID AS int) AS Div3AirportSeqID,
+        cast(ad.Div3WheelsOn AS int) AS Div3WheelsOn,
+        cast(ad.Div3TotalGTime AS int) AS Div3TotalGTime,
+        cast(ad.Div3LongestGTime AS int) AS Div3LongestGTime,
+        cast(ad.Div3WheelsOff AS int) AS Div3WheelsOff,
+        cast(ad.Div3TailNum AS int) AS Div3TailNum,
+        cast(ad.Div4Airport AS int) AS Div4Airport,
+        cast(ad.Div4AirportID AS int) AS Div4AirportID,
+        cast(ad.Div4AirportSeqID AS int) AS Div4AirportSeqID,
+        cast(ad.Div4WheelsOn AS int) AS Div4WheelsOn,
+        cast(ad.Div4TotalGTime AS int) AS Div4TotalGTime,
+        cast(ad.Div4LongestGTime AS int) AS Div4LongestGTime,
+        cast(ad.Div4WheelsOff AS int) AS Div4WheelsOff,
+        cast(ad.Div4TailNum AS int) AS Div4TailNum,
+        cast(ad.Div5Airport AS int) AS Div5Airport,
+        cast(ad.Div5AirportID AS int) AS Div5AirportID,
+        cast(ad.Div5AirportSeqID AS int) AS Div5AirportSeqID,
+        cast(ad.Div5WheelsOn AS int) AS Div5WheelsOn,
+        cast(ad.Div5TotalGTime AS int) AS Div5TotalGTime,
+        cast(ad.Div5LongestGTime AS int) AS Div5LongestGTime,
+        cast(ad.Div5WheelsOff AS int) AS Div5WheelsOff,
+        cast(ad.Div5TailNum AS int) AS Div5TailNum,
+        cast(ad.FlightDate AS date) AS FlightDate
+        FROM airline_data ad where ad.year = #{year}
     </insert>
 
-    <!--通过主键修改数据-->
+    <!--通过主键修改数据: flightdate 是分区字段，无法修改-->
     <update id="update">
         update airline.airline
         <set>
-            <if test="year != null">
-                year = #{year},
+            <if test="airline.year != null">
+                year = #{airline.year},
             </if>
-            <if test="quarter != null">
-                quarter = #{quarter},
+            <if test="airline.quarter != null">
+                quarter = #{airline.quarter},
             </if>
-            <if test="month != null">
-                month = #{month},
+            <if test="airline.month != null">
+                month = #{airline.month},
             </if>
-            <if test="dayofmonth != null">
-                dayofmonth = #{dayofmonth},
+            <if test="airline.dayofmonth != null">
+                dayofmonth = #{airline.dayofmonth},
             </if>
-            <if test="dayofweek != null">
-                dayofweek = #{dayofweek},
+            <if test="airline.dayofweek != null">
+                dayofweek = #{airline.dayofweek},
             </if>
-            <if test="uniquecarrier != null and uniquecarrier != ''">
-                uniquecarrier = #{uniquecarrier},
+            <if test="airline.uniquecarrier != null and airline.uniquecarrier != ''">
+                uniquecarrier = #{airline.uniquecarrier},
             </if>
-            <if test="airlineid != null">
-                airlineid = #{airlineid},
+            <if test="airline.airlineid != null">
+                airlineid = #{airline.airlineid},
             </if>
-            <if test="carrier != null and carrier != ''">
-                carrier = #{carrier},
+            <if test="airline.carrier != null and airline.carrier != ''">
+                carrier = #{airline.carrier},
             </if>
-            <if test="tailnum != null and tailnum != ''">
-                tailnum = #{tailnum},
+            <if test="airline.originairportid != null">
+                originairportid = #{airline.originairportid},
             </if>
-            <if test="originairportid != null">
-                originairportid = #{originairportid},
+            <if test="airline.originairportseqid != null">
+                originairportseqid = #{airline.originairportseqid},
             </if>
-            <if test="originairportseqid != null">
-                originairportseqid = #{originairportseqid},
+            <if test="airline.origincitymarketid != null">
+                origincitymarketid = #{airline.origincitymarketid},
             </if>
-            <if test="origincitymarketid != null">
-                origincitymarketid = #{origincitymarketid},
+            <if test="airline.origin != null and airline.origin != ''">
+                origin = #{airline.origin},
             </if>
-            <if test="origin != null and origin != ''">
-                origin = #{origin},
+            <if test="airline.origincityname != null and airline.origincityname != ''">
+                origincityname = #{airline.origincityname},
             </if>
-            <if test="origincityname != null and origincityname != ''">
-                origincityname = #{origincityname},
+            <if test="airline.originstate != null and airline.originstate != ''">
+                originstate = #{airline.originstate},
             </if>
-            <if test="originstate != null and originstate != ''">
-                originstate = #{originstate},
+            <if test="airline.originstatefips != null">
+                originstatefips = #{airline.originstatefips},
             </if>
-            <if test="originstatefips != null">
-                originstatefips = #{originstatefips},
+            <if test="airline.originstatename != null and airline.originstatename != ''">
+                originstatename = #{airline.originstatename},
             </if>
-            <if test="originstatename != null and originstatename != ''">
-                originstatename = #{originstatename},
+            <if test="airline.originwac != null">
+                originwac = #{airline.originwac},
             </if>
-            <if test="originwac != null">
-                originwac = #{originwac},
+            <if test="airline.destairportid != null">
+                destairportid = #{airline.destairportid},
             </if>
-            <if test="destairportid != null">
-                destairportid = #{destairportid},
+            <if test="airline.destairportseqid != null">
+                destairportseqid = #{airline.destairportseqid},
             </if>
-            <if test="destairportseqid != null">
-                destairportseqid = #{destairportseqid},
+            <if test="airline.destcitymarketid != null">
+                destcitymarketid = #{airline.destcitymarketid},
             </if>
-            <if test="destcitymarketid != null">
-                destcitymarketid = #{destcitymarketid},
+            <if test="airline.dest != null and airline.dest != ''">
+                dest = #{airline.dest},
             </if>
-            <if test="dest != null and dest != ''">
-                dest = #{dest},
+            <if test="airline.destcityname != null and airline.destcityname != ''">
+                destcityname = #{airline.destcityname},
             </if>
-            <if test="destcityname != null and destcityname != ''">
-                destcityname = #{destcityname},
+            <if test="airline.deststate != null and airline.deststate != ''">
+                deststate = #{airline.deststate},
             </if>
-            <if test="deststate != null and deststate != ''">
-                deststate = #{deststate},
+            <if test="airline.deststatefips != null">
+                deststatefips = #{airline.deststatefips},
             </if>
-            <if test="deststatefips != null">
-                deststatefips = #{deststatefips},
+            <if test="airline.deststatename != null and airline.deststatename != ''">
+                deststatename = #{airline.deststatename},
             </if>
-            <if test="deststatename != null and deststatename != ''">
-                deststatename = #{deststatename},
+            <if test="airline.destwac != null">
+                destwac = #{airline.destwac},
             </if>
-            <if test="destwac != null">
-                destwac = #{destwac},
+            <if test="airline.crsdeptime != null">
+                crsdeptime = #{airline.crsdeptime},
             </if>
-            <if test="crsdeptime != null">
-                crsdeptime = #{crsdeptime},
+            <if test="airline.deptime != null">
+                deptime = #{airline.deptime},
             </if>
-            <if test="deptime != null">
-                deptime = #{deptime},
+            <if test="airline.depdelay != null">
+                depdelay = #{airline.depdelay},
             </if>
-            <if test="depdelay != null">
-                depdelay = #{depdelay},
+            <if test="airline.depdelayminutes != null">
+                depdelayminutes = #{airline.depdelayminutes},
             </if>
-            <if test="depdelayminutes != null">
-                depdelayminutes = #{depdelayminutes},
+            <if test="airline.depdel15 != null">
+                depdel15 = #{airline.depdel15},
             </if>
-            <if test="depdel15 != null">
-                depdel15 = #{depdel15},
+            <if test="airline.departuredelaygroups != null">
+                departuredelaygroups = #{airline.departuredelaygroups},
             </if>
-            <if test="departuredelaygroups != null">
-                departuredelaygroups = #{departuredelaygroups},
+            <if test="airline.deptimeblk != null and airline.deptimeblk != ''">
+                deptimeblk = #{airline.deptimeblk},
             </if>
-            <if test="deptimeblk != null and deptimeblk != ''">
-                deptimeblk = #{deptimeblk},
+            <if test="airline.taxiout != null">
+                taxiout = #{airline.taxiout},
             </if>
-            <if test="taxiout != null">
-                taxiout = #{taxiout},
+            <if test="airline.wheelsoff != null">
+                wheelsoff = #{airline.wheelsoff},
             </if>
-            <if test="wheelsoff != null">
-                wheelsoff = #{wheelsoff},
+            <if test="airline.wheelson != null">
+                wheelson = #{airline.wheelson},
             </if>
-            <if test="wheelson != null">
-                wheelson = #{wheelson},
+            <if test="airline.taxiin != null">
+                taxiin = #{airline.taxiin},
             </if>
-            <if test="taxiin != null">
-                taxiin = #{taxiin},
+            <if test="airline.crsarrtime != null">
+                crsarrtime = #{airline.crsarrtime},
             </if>
-            <if test="crsarrtime != null">
-                crsarrtime = #{crsarrtime},
+            <if test="airline.arrtime != null">
+                arrtime = #{airline.arrtime},
             </if>
-            <if test="arrtime != null">
-                arrtime = #{arrtime},
+            <if test="airline.arrdelay != null">
+                arrdelay = #{airline.arrdelay},
             </if>
-            <if test="arrdelay != null">
-                arrdelay = #{arrdelay},
+            <if test="airline.arrdelayminutes != null">
+                arrdelayminutes = #{airline.arrdelayminutes},
             </if>
-            <if test="arrdelayminutes != null">
-                arrdelayminutes = #{arrdelayminutes},
+            <if test="airline.arrdel15 != null">
+                arrdel15 = #{airline.arrdel15},
             </if>
-            <if test="arrdel15 != null">
-                arrdel15 = #{arrdel15},
+            <if test="airline.arrivaldelaygroups != null">
+                arrivaldelaygroups = #{airline.arrivaldelaygroups},
             </if>
-            <if test="arrivaldelaygroups != null">
-                arrivaldelaygroups = #{arrivaldelaygroups},
+            <if test="airline.arrtimeblk != null and airline.arrtimeblk != ''">
+                arrtimeblk = #{airline.arrtimeblk},
             </if>
-            <if test="arrtimeblk != null and arrtimeblk != ''">
-                arrtimeblk = #{arrtimeblk},
+            <if test="airline.cancelled != null">
+                cancelled = #{airline.cancelled},
             </if>
-            <if test="cancelled != null">
-                cancelled = #{cancelled},
+            <if test="airline.cancellationcode != null and airline.cancellationcode != ''">
+                cancellationcode = #{airline.cancellationcode},
             </if>
-            <if test="cancellationcode != null and cancellationcode != ''">
-                cancellationcode = #{cancellationcode},
+            <if test="airline.diverted != null">
+                diverted = #{airline.diverted},
             </if>
-            <if test="diverted != null">
-                diverted = #{diverted},
+            <if test="airline.crselapsedtime != null">
+                crselapsedtime = #{airline.crselapsedtime},
             </if>
-            <if test="crselapsedtime != null">
-                crselapsedtime = #{crselapsedtime},
+            <if test="airline.actualelapsedtime != null">
+                actualelapsedtime = #{airline.actualelapsedtime},
             </if>
-            <if test="actualelapsedtime != null">
-                actualelapsedtime = #{actualelapsedtime},
+            <if test="airline.airtime != null">
+                airtime = #{airline.airtime},
             </if>
-            <if test="airtime != null">
-                airtime = #{airtime},
+            <if test="airline.flights != null">
+                flights = #{airline.flights},
             </if>
-            <if test="flights != null">
-                flights = #{flights},
+            <if test="airline.distance != null">
+                distance = #{airline.distance},
             </if>
-            <if test="distance != null">
-                distance = #{distance},
+            <if test="airline.distancegroup != null">
+                distancegroup = #{airline.distancegroup},
             </if>
-            <if test="distancegroup != null">
-                distancegroup = #{distancegroup},
+            <if test="airline.carrierdelay != null">
+                carrierdelay = #{airline.carrierdelay},
             </if>
-            <if test="carrierdelay != null">
-                carrierdelay = #{carrierdelay},
+            <if test="airline.weatherdelay != null">
+                weatherdelay = #{airline.weatherdelay},
             </if>
-            <if test="weatherdelay != null">
-                weatherdelay = #{weatherdelay},
+            <if test="airline.nasdelay != null">
+                nasdelay = #{airline.nasdelay},
             </if>
-            <if test="nasdelay != null">
-                nasdelay = #{nasdelay},
+            <if test="airline.securitydelay != null">
+                securitydelay = #{airline.securitydelay},
             </if>
-            <if test="securitydelay != null">
-                securitydelay = #{securitydelay},
+            <if test="airline.lateaircraftdelay != null">
+                lateaircraftdelay = #{airline.lateaircraftdelay},
             </if>
-            <if test="lateaircraftdelay != null">
-                lateaircraftdelay = #{lateaircraftdelay},
+            <if test="airline.firstdeptime != null">
+                firstdeptime = #{airline.firstdeptime},
             </if>
-            <if test="firstdeptime != null">
-                firstdeptime = #{firstdeptime},
+            <if test="airline.totaladdgtime != null">
+                totaladdgtime = #{airline.totaladdgtime},
             </if>
-            <if test="totaladdgtime != null">
-                totaladdgtime = #{totaladdgtime},
+            <if test="airline.longestaddgtime != null">
+                longestaddgtime = #{airline.longestaddgtime},
             </if>
-            <if test="longestaddgtime != null">
-                longestaddgtime = #{longestaddgtime},
+            <if test="airline.divairportlandings != null">
+                divairportlandings = #{airline.divairportlandings},
             </if>
-            <if test="divairportlandings != null">
-                divairportlandings = #{divairportlandings},
+            <if test="airline.divreacheddest != null">
+                divreacheddest = #{airline.divreacheddest},
             </if>
-            <if test="divreacheddest != null">
-                divreacheddest = #{divreacheddest},
+            <if test="airline.divactualelapsedtime != null">
+                divactualelapsedtime = #{airline.divactualelapsedtime},
             </if>
-            <if test="divactualelapsedtime != null">
-                divactualelapsedtime = #{divactualelapsedtime},
+            <if test="airline.divarrdelay != null">
+                divarrdelay = #{airline.divarrdelay},
             </if>
-            <if test="divarrdelay != null">
-                divarrdelay = #{divarrdelay},
+            <if test="airline.divdistance != null">
+                divdistance = #{airline.divdistance},
             </if>
-            <if test="divdistance != null">
-                divdistance = #{divdistance},
+            <if test="airline.div1airport != null">
+                div1airport = #{airline.div1airport},
             </if>
-            <if test="div1airport != null">
-                div1airport = #{div1airport},
+            <if test="airline.div1airportid != null">
+                div1airportid = #{airline.div1airportid},
             </if>
-            <if test="div1airportid != null">
-                div1airportid = #{div1airportid},
+            <if test="airline.div1airportseqid != null">
+                div1airportseqid = #{airline.div1airportseqid},
             </if>
-            <if test="div1airportseqid != null">
-                div1airportseqid = #{div1airportseqid},
+            <if test="airline.div1wheelson != null">
+                div1wheelson = #{airline.div1wheelson},
             </if>
-            <if test="div1wheelson != null">
-                div1wheelson = #{div1wheelson},
+            <if test="airline.div1totalgtime != null">
+                div1totalgtime = #{airline.div1totalgtime},
             </if>
-            <if test="div1totalgtime != null">
-                div1totalgtime = #{div1totalgtime},
+            <if test="airline.div1longestgtime != null">
+                div1longestgtime = #{airline.div1longestgtime},
             </if>
-            <if test="div1longestgtime != null">
-                div1longestgtime = #{div1longestgtime},
+            <if test="airline.div1wheelsoff != null">
+                div1wheelsoff = #{airline.div1wheelsoff},
             </if>
-            <if test="div1wheelsoff != null">
-                div1wheelsoff = #{div1wheelsoff},
+            <if test="airline.div1tailnum != null">
+                div1tailnum = #{airline.div1tailnum},
             </if>
-            <if test="div1tailnum != null">
-                div1tailnum = #{div1tailnum},
+            <if test="airline.div2airport != null">
+                div2airport = #{airline.div2airport},
             </if>
-            <if test="div2airport != null">
-                div2airport = #{div2airport},
+            <if test="airline.div2airportid != null">
+                div2airportid = #{airline.div2airportid},
             </if>
-            <if test="div2airportid != null">
-                div2airportid = #{div2airportid},
+            <if test="airline.div2airportseqid != null">
+                div2airportseqid = #{airline.div2airportseqid},
             </if>
-            <if test="div2airportseqid != null">
-                div2airportseqid = #{div2airportseqid},
+            <if test="airline.div2wheelson != null">
+                div2wheelson = #{airline.div2wheelson},
             </if>
-            <if test="div2wheelson != null">
-                div2wheelson = #{div2wheelson},
+            <if test="airline.div2totalgtime != null">
+                div2totalgtime = #{airline.div2totalgtime},
             </if>
-            <if test="div2totalgtime != null">
-                div2totalgtime = #{div2totalgtime},
+            <if test="airline.div2longestgtime != null">
+                div2longestgtime = #{airline.div2longestgtime},
             </if>
-            <if test="div2longestgtime != null">
-                div2longestgtime = #{div2longestgtime},
+            <if test="airline.div2wheelsoff != null">
+                div2wheelsoff = #{airline.div2wheelsoff},
             </if>
-            <if test="div2wheelsoff != null">
-                div2wheelsoff = #{div2wheelsoff},
+            <if test="airline.div2tailnum != null">
+                div2tailnum = #{airline.div2tailnum},
             </if>
-            <if test="div2tailnum != null">
-                div2tailnum = #{div2tailnum},
+            <if test="airline.div3airport != null">
+                div3airport = #{airline.div3airport},
             </if>
-            <if test="div3airport != null">
-                div3airport = #{div3airport},
+            <if test="airline.div3airportid != null">
+                div3airportid = #{airline.div3airportid},
             </if>
-            <if test="div3airportid != null">
-                div3airportid = #{div3airportid},
+            <if test="airline.div3airportseqid != null">
+                div3airportseqid = #{airline.div3airportseqid},
             </if>
-            <if test="div3airportseqid != null">
-                div3airportseqid = #{div3airportseqid},
+            <if test="airline.div3wheelson != null">
+                div3wheelson = #{airline.div3wheelson},
             </if>
-            <if test="div3wheelson != null">
-                div3wheelson = #{div3wheelson},
+            <if test="airline.div3totalgtime != null">
+                div3totalgtime = #{airline.div3totalgtime},
             </if>
-            <if test="div3totalgtime != null">
-                div3totalgtime = #{div3totalgtime},
+            <if test="airline.div3longestgtime != null">
+                div3longestgtime = #{airline.div3longestgtime},
             </if>
-            <if test="div3longestgtime != null">
-                div3longestgtime = #{div3longestgtime},
+            <if test="airline.div3wheelsoff != null">
+                div3wheelsoff = #{airline.div3wheelsoff},
             </if>
-            <if test="div3wheelsoff != null">
-                div3wheelsoff = #{div3wheelsoff},
+            <if test="airline.div3tailnum != null">
+                div3tailnum = #{airline.div3tailnum},
             </if>
-            <if test="div3tailnum != null">
-                div3tailnum = #{div3tailnum},
+            <if test="airline.div4airport != null">
+                div4airport = #{airline.div4airport},
             </if>
-            <if test="div4airport != null">
-                div4airport = #{div4airport},
+            <if test="airline.div4airportid != null">
+                div4airportid = #{airline.div4airportid},
             </if>
-            <if test="div4airportid != null">
-                div4airportid = #{div4airportid},
+            <if test="airline.div4airportseqid != null">
+                div4airportseqid = #{airline.div4airportseqid},
             </if>
-            <if test="div4airportseqid != null">
-                div4airportseqid = #{div4airportseqid},
+            <if test="airline.div4wheelson != null">
+                div4wheelson = #{airline.div4wheelson},
             </if>
-            <if test="div4wheelson != null">
-                div4wheelson = #{div4wheelson},
+            <if test="airline.div4totalgtime != null">
+                div4totalgtime = #{airline.div4totalgtime},
             </if>
-            <if test="div4totalgtime != null">
-                div4totalgtime = #{div4totalgtime},
+            <if test="airline.div4longestgtime != null">
+                div4longestgtime = #{airline.div4longestgtime},
             </if>
-            <if test="div4longestgtime != null">
-                div4longestgtime = #{div4longestgtime},
+            <if test="airline.div4wheelsoff != null">
+                div4wheelsoff = #{airline.div4wheelsoff},
             </if>
-            <if test="div4wheelsoff != null">
-                div4wheelsoff = #{div4wheelsoff},
+            <if test="airline.div4tailnum != null">
+                div4tailnum = #{airline.div4tailnum},
             </if>
-            <if test="div4tailnum != null">
-                div4tailnum = #{div4tailnum},
+            <if test="airline.div5airport != null">
+                div5airport = #{airline.div5airport},
             </if>
-            <if test="div5airport != null">
-                div5airport = #{div5airport},
+            <if test="airline.div5airportid != null">
+                div5airportid = #{airline.div5airportid},
             </if>
-            <if test="div5airportid != null">
-                div5airportid = #{div5airportid},
+            <if test="airline.div5airportseqid != null">
+                div5airportseqid = #{airline.div5airportseqid},
             </if>
-            <if test="div5airportseqid != null">
-                div5airportseqid = #{div5airportseqid},
+            <if test="airline.div5wheelson != null">
+                div5wheelson = #{airline.div5wheelson},
             </if>
-            <if test="div5wheelson != null">
-                div5wheelson = #{div5wheelson},
+            <if test="airline.div5totalgtime != null">
+                div5totalgtime = #{airline.div5totalgtime},
             </if>
-            <if test="div5totalgtime != null">
-                div5totalgtime = #{div5totalgtime},
+            <if test="airline.div5longestgtime != null">
+                div5longestgtime = #{airline.div5longestgtime},
             </if>
-            <if test="div5longestgtime != null">
-                div5longestgtime = #{div5longestgtime},
+            <if test="airline.div5wheelsoff != null">
+                div5wheelsoff = #{airline.div5wheelsoff},
             </if>
-            <if test="div5wheelsoff != null">
-                div5wheelsoff = #{div5wheelsoff},
-            </if>
-            <if test="div5tailnum != null">
-                div5tailnum = #{div5tailnum},
-            </if>
-            <if test="flightdate != null">
-                flightdate = #{flightdate},
+            <if test="airline.div5tailnum != null">
+                div5tailnum = #{airline.div5tailnum},
             </if>
         </set>
-        where flightnum = #{flightnum}
+        where flightnum = #{airline.flightnum} and tailnum = #{airline.tailnum}
     </update>
 </mapper>

@@ -598,7 +598,7 @@ public class AirlineController {
      * @return 实例对象
      */
     @ApiOperation(value = "导入外部表数据")
-    @GetMapping("/airline/load")
+    @PostMapping("/airline/load")
     public void load(String year) {
         this.airlineService.insertFromOutTableOn(year);
     }
@@ -626,17 +626,6 @@ public class AirlineController {
     public void updateByFlightNum(@RequestParam Integer flightnum, Airline airline) {
         airline.setFlightnum(flightnum);
         this.airlineService.update(airline);
-    }
-
-    /**
-     * 新增数据
-     *
-     * @param airline
-     */
-    @ApiOperation(value = "新增数据")
-    @PostMapping("/airline")
-    public void insert(Airline airline) {
-        this.airlineService.insert(airline);
     }
 
 }
@@ -682,18 +671,6 @@ public class AirlineServiceImpl implements AirlineService {
         return this.airlineDao.queryAllByLimit(airline, offset, size);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param airline 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Airline insert(Airline airline) {
-        this.airlineDao.insert(airline);
-        return airline;
-    }
-
     @Override
     public void insertFromOutTableOn(String year) {
         this.airlineDao.insertFromOutTableOn(year);
@@ -730,14 +707,6 @@ public interface AirlineDao {
      * @return 实例对象
      */
     Airline queryByAirlineId(Long airlineId);
-
-    /**
-     * 新增数据
-     *
-     * @param airline 实例对象
-     * @return 影响行数
-     */
-    int insert(Airline airline);
 
     List<Airline> queryAllByLimit(@Param("airline") Airline airline, @Param("offset") int offset, @Param("limit") int limit);
 
